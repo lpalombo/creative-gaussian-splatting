@@ -1,10 +1,18 @@
+name: GitHub Pages
+
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main # Set a branch name to trigger deployment
+  pull_request:
 
 jobs:
-  cache-and-install:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
 
     steps:
       - name: Checkout
