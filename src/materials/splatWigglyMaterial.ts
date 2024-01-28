@@ -55,7 +55,7 @@ export const SplatWigglyMaterial = /* @__PURE__ */ shaderMaterial(
       // CUSTOM
       center.xyz += vec3(
         0.0,
-        sin(time + center.x),
+        sin(time + center.x) * 0.25,
         0.0
       );
       // END CUSTOM

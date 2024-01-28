@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -29,10 +29,11 @@ body {
   height: 100%;
   min-height: 100dvh;
 }
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+@media (max-width: 600px) {
+  html,
+  body {
+    font-size: 12px;
+  }
 }
 
 button {

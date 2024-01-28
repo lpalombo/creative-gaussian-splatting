@@ -552,6 +552,8 @@ function pushDataBuffer(shared: SharedState, buffer: ArrayBufferLike, vertexCoun
   return matrices;
 }
 
+export type SplatMaterialType = 'base' | 'wiggly' | 'stylized';
+
 export function Splat({
   src,
   toneMapped = false,
@@ -560,7 +562,7 @@ export function Splat({
   chunkSize = 25000,
   materialType = 'base',
   ...props
-}: SplatProps & { materialType?: 'base' | 'wiggly' | 'stylized' }) {
+}: SplatProps & { materialType?: SplatMaterialType }) {
   extend({ SplatBaseMaterial, SplatWigglyMaterial, SplatStylizedMaterial });
 
   const ref = React.useRef<TargetMesh>(null!);
