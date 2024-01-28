@@ -2,7 +2,7 @@ import './App.css';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Splat, SplatMaterialType } from './Splat';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { content } from './content';
 
 function App() {
