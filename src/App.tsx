@@ -1,5 +1,5 @@
 import './App.css';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Splat, SplatMaterialType } from './Splat';
 import { ReactNode, useEffect, useRef, useState } from 'react';
@@ -24,7 +24,7 @@ function App() {
       />
       <div id="canvas-container" ref={container}>
         <Canvas
-          dpr={[1, 1.5]}
+          dpr={[0.5, 1]}
           camera={{ position: [-3, 1, -5.5], fov: 45, near: 1, far: 100 }}
           eventSource={container}
           eventPrefix="client">
@@ -61,10 +61,16 @@ function Dialog(props: {
   );
 }
 
-function Scene(props: { mode?: SplatMaterialType | 'alphaTest' | 'alphaHash' }) {
+function Scene(props: { mode?: SplatMaterialType | 'badSorting' | 'alphaTest' | 'alphaHash' }) {
   const { mode = 'base' } = props;
-  const showSecondModel = mode === 'alphaTest' || mode === 'alphaHash';
-  const materialType = mode === 'alphaTest' || mode === 'alphaHash' ? 'base' : mode;
+  const showSecondModel = mode === 'alphaTest' || mode === 'alphaHash' || mode === 'badSorting';
+  const materialType = showSecondModel ? 'base' : mode;
+
+  const group = useRef<THREE.Group>(null!);
+
+  useFrame(({ clock }) => {
+    group.current.position.y = Math.sin(clock.getElapsedTime() * 1) * 2;
+  });
 
   return (
     <>
@@ -76,13 +82,18 @@ function Scene(props: { mode?: SplatMaterialType | 'alphaTest' | 'alphaHash' }) 
         src="https://pub-c94e113880784f8f8227940d6abceeef.r2.dev/gs_Ichiban_Living.splat"
         position={[0, 0, 0]}
         materialType={materialType}
+        alphaTest={mode === 'alphaTest' ? 0.1 : undefined}
+        alphaHash={mode === 'alphaHash' ? true : false}
       />
-      {showSecondModel && (
+      <group ref={group}>
         <Splat
           src="https://pub-c94e113880784f8f8227940d6abceeef.r2.dev/gs_church.splat"
           position={[1, 0, 0]}
+          visible={showSecondModel}
+          alphaTest={mode === 'alphaTest' ? 0.1 : undefined}
+          alphaHash={mode === 'alphaHash' ? true : false}
         />
-      )}
+      </group>
     </>
   );
 }
