@@ -93,3 +93,10 @@
   font-weight: 500;
   cursor: pointer;
 }
+@media (prefers-color-scheme: dark) {
+  .dialog {
+    background-color: rgb(0, 0, 0, 0.95);
+  }
+}
+
+
